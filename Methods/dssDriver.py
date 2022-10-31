@@ -69,7 +69,7 @@ def dssDriver(iterName, dss, initDSS, initParams, outES=None):
     # get all node-based buses,
     nodeNames = dss.circuit_all_node_names()
     # get all node-based lines names
-    nodeLineNames, lines = sen_obj_0.get_nodeLineNames()
+    nodeLineNames, lines, *_ = sen_obj_0.get_nodeLineNames()
     # points in time
     pointsInTime = len(dfDemand.columns)
     # prelocation

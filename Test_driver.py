@@ -26,8 +26,8 @@ initParams["userDemand"] = "None"
 initParams["freq"] = "H"  # "15min", "30min", "H"
 initParams["dispatchType"] = "SLP"  # "LP"
 initParams["script_path"] = str(script_path)  # "LP"
-initParams["case"] = "123bus"  # 13bus
-initParams["dssFile"] = "IEEE123Master.dss"  # 'IEEE13Nodeckt.dss'
+initParams["case"] = "13bus"  # 123bus 13bus
+initParams["dssFile"] = "IEEE13Nodeckt.dss"  # IEEE123Master.dss'IEEE13Nodeckt.dss'
 
 # output directory
 # time stamp
@@ -45,10 +45,10 @@ else:
     os.mkdir(output_dir12)
 
 # define traverse parameters
-regFlags = ["False", "True"]
-loadMults = [13]  # 1 for default loadshape, 11 for real.
+regFlags = ["False"]
+loadMults = [1]  # 1 for default loadshape, 11 for real.
 batSizes = [0, 100, 200]
-pvSizes = [0, 100, 300, 400]
+pvSizes = [0, 100]
 
 DRcost = np.zeros((len(regFlags), len(loadMults), len(batSizes), len(pvSizes)))
 J = np.zeros((len(regFlags), len(loadMults), len(batSizes), len(pvSizes)))
@@ -83,25 +83,25 @@ for fl, flag in enumerate(regFlags):
                 losses_cost[fl, lm, ba, pv] = outDSS["losses_cost"]
                 # maxOutput.append(outES["maxOutput"])
 
-DR_F = DRcost[0, 0, :, :]
-DR_T = DRcost[1, 0, :, :]
-J_F = J[0, 0, :, :]
-J_T = J[1, 0, :, :]
-losses_F = losses_cost[0, 0, :, :]
-losses_T = losses_cost[1, 0, :, :]
-it_F = it[0, 0, :, :]
-it_T = it[1, 0, :, :]
-concat = np.concatenate((DR_F,
-                        DR_T,
-                        J_F,
-                        J_T,
-                        losses_F,
-                        losses_T,
-                        it_F,
-                        it_T), axis=0)
+# DR_F = DRcost[0, 0, :, :]
+# DR_T = DRcost[1, 0, :, :]
+# J_F = J[0, 0, :, :]
+# J_T = J[1, 0, :, :]
+# losses_F = losses_cost[0, 0, :, :]
+# losses_T = losses_cost[1, 0, :, :]
+# it_F = it[0, 0, :, :]
+# it_T = it[1, 0, :, :]
+# concat = np.concatenate((DR_F,
+#                         DR_T,
+#                         J_F,
+#                         J_T,
+#                         losses_F,
+#                         losses_T,
+#                         it_F,
+#                         it_T), axis=0)
 
-csvFile = pathlib.Path(output_dir12).joinpath('intQant.csv')
-np.savetxt(csvFile, concat, fmt="%.3e")
+# csvFile = pathlib.Path(output_dir12).joinpath('intQant.csv')
+# np.savetxt(csvFile, concat, fmt="%.3e")
 
 # npyFile = pathlib.Path(output_dir12).joinpath('cost.npy')
 # with open(npyFile, 'wb') as f:

@@ -33,7 +33,7 @@ def computeRegSensitivity(dss, initParams):
     # get all node-based buses
     nodeNames = dss.circuit_all_node_names()
     # get all node-based lines names
-    nodeLineNames, lines = sen_obj.get_nodeLineNames()
+    nodeLineNames, lines, *_ = sen_obj.get_nodeLineNames()
     # get base voltage
     baseVolts = sen_obj.voltageMags()
     # get base pjk

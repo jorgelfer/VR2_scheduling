@@ -17,7 +17,6 @@ def set_baseline(dss):
     dss.text("Set Maxiterations=100")
     dss.text("Set controlmode=Off")  # this is for disabling regulators
 
-
 def computeSensitivity(dss, initParams):
 
     # preprocess
@@ -39,7 +38,7 @@ def computeSensitivity(dss, initParams):
     nodeNames = dss.circuit_all_node_names()
 
     # get all node-based lines names
-    nodeLineNames, lines = sen_obj.get_nodeLineNames()
+    nodeLineNames, lines, lNodes, lNamps = sen_obj.get_nodeLineNames()
 
     dss.text("solve")
 
@@ -78,6 +77,15 @@ def computeSensitivity(dss, initParams):
     dfVS.to_pickle(pathlib.Path(script_path).joinpath("inputs", case, "VoltageSensitivity.pkl"))
     dfPjk = pd.DataFrame(PTDF_jk, np.asarray(nodeLineNames), np.asarray(nodeNames))
     dfPjk.to_pickle(pathlib.Path(script_path).joinpath("inputs", case, "PTDF.pkl"))
+
+    # save line info
+    dict_to_df = dict()
+    dict_to_df["Line_Name"] = lines
+    dict_to_df["NumNodes"] = lNodes
+    dict_to_df["NormAmps"] = lNamps
+    df = pd.DataFrame().from_dict(dict_to_df)
+    output_file = pathlib.Path(script_path).joinpath("inputs", case, "LineInfo.pkl")
+    df.to_pickle(output_file) 
 
     if initParams["plot"] == "True":
         h = 20

@@ -72,7 +72,7 @@ def scheduling(initParams):
     # initialize
     outES = None
     k = 0
-    maxIter = 10
+    maxIter = 1
     
     while (violatingVolts.any() or violatingLines.any()) and (k < maxIter):
 

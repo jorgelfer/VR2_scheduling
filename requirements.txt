@@ -1,0 +1,8 @@
+py-dss-interface
+numpy
+pandas
+matplotlib
+seaborn
+gurobipy
+scipy
+openpyxl

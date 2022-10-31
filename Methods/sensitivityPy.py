@@ -112,6 +112,8 @@ class sensitivityPy:
         # phase-based names
         lname = list()
         lines = list()
+        lNodes = list()
+        lNamps = list()
         elements = self.dss.circuit_all_element_names()
         
         for i, elem in enumerate(elements):
@@ -125,6 +127,8 @@ class sensitivityPy:
                 nodes = [i for i in self.dss.cktelement_node_order() if i != 0]
                 # reorder the number of nodes
                 nodes = np.asarray(nodes).reshape((int(len(nodes) / 2), -1), order="F")
+                lNodes.append(np.size(nodes,0))
+                lNamps.append(self.dss.cktelement_read_norm_amps())
                 for t1n, t2n in zip(nodes[:, 0], nodes[:, 1]):
                     lname.append("L" + buses[0].split(".")[0] + f".{t1n}" + "-" + buses[1].split(".")[0] + f".{t1n}")
     
@@ -137,11 +141,13 @@ class sensitivityPy:
                 nodes = [i for i in self.dss.cktelement_node_order() if i != 0]
                 # reorder the number of nodes
                 nodes = np.asarray(nodes).reshape((int(len(nodes)/2),-1),order="F")
+                lNodes.append(np.size(nodes,0))
+                lNamps.append(self.dss.cktelement_read_norm_amps())
             
                 for t1n, t2n in zip(nodes[:,0],nodes[:,1]):
                     lname.append("T"+ buses[0].split(".")[0] + f".{t1n}" + "-" + buses[1].split(".")[0] + f".{t1n}")
     
-        return lname, lines
+        return lname, lines, lNodes, lNamps
     
     # Helper methods
     
